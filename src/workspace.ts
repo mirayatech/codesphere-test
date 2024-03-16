@@ -1,4 +1,4 @@
-import { html, LitElement, css } from "lit";
+import { html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 import { workspaceStyles } from "./workspaceStyles";
 import { modalStyles } from "./modalStyles";
@@ -7,12 +7,12 @@ import { dropdownStyles } from "./dropdownStyles";
 class Workspace extends LitElement {
   @property({ type: Boolean }) isModalOpen: boolean = false;
   @property({ type: Array }) workspaces = [
-    { name: "Workspace 1" },
-    { name: "Workspace 2" },
-    { name: "Workspace 3" },
+    { id: 1, name: "Workspace 1" },
+    { id: 2, name: "Workspace 2" },
+    { id: 3, name: "Workspace 3" },
   ];
   @property({ type: String }) newWorkspaceName: string = "";
-  @property({ type: String }) dropdownVisibleFor: string | null = null;
+  @property({ type: Number }) dropdownVisibleFor: number | null = null;
 
   static styles = [workspaceStyles, modalStyles, dropdownStyles];
 
@@ -28,17 +28,19 @@ class Workspace extends LitElement {
             <th>Actions</th>
           </tr>
           ${this.workspaces.map(
-            (workspace, index) => html`
+            (workspace) => html`
               <tr>
                 <td>${workspace.name}</td>
                 <td>
-                  <button @click="${() => this.toggleDropdown(workspace.name)}">
+                  <button @click="${() => this.toggleDropdown(workspace.id)}">
                     ...
                   </button>
-                  ${this.dropdownVisibleFor === workspace.name
+                  ${this.dropdownVisibleFor === workspace.id
                     ? html`
                         <div class="dropdown">
-                          <button @click="${() => this.deleteWorkspace(index)}">
+                          <button
+                            @click="${() => this.deleteWorkspace(workspace.id)}"
+                          >
                             Delete
                           </button>
                         </div>
@@ -98,20 +100,28 @@ class Workspace extends LitElement {
 
   createWorkspace() {
     if (this.newWorkspaceName.trim() !== "") {
-      this.workspaces = [...this.workspaces, { name: this.newWorkspaceName }];
+      const newId =
+        this.workspaces.reduce(
+          (maxId, workspace) => Math.max(maxId, workspace.id),
+          0
+        ) + 1;
+      this.workspaces = [
+        ...this.workspaces,
+        { id: newId, name: this.newWorkspaceName },
+      ];
       this.newWorkspaceName = "";
       this.closeModal();
     }
   }
 
-  toggleDropdown(workspaceName: string) {
+  toggleDropdown(workspaceId: number) {
     this.dropdownVisibleFor =
-      this.dropdownVisibleFor === workspaceName ? null : workspaceName;
+      this.dropdownVisibleFor === workspaceId ? null : workspaceId;
   }
 
-  deleteWorkspace(workspaceIndex: number) {
+  deleteWorkspace(workspaceId: number) {
     this.workspaces = this.workspaces.filter(
-      (_, index) => index !== workspaceIndex
+      (workspace) => workspace.id !== workspaceId
     );
     this.dropdownVisibleFor = null;
   }
