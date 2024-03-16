@@ -53,6 +53,7 @@ export const workspaceStyles = css`
   th:last-child,
   td:last-child {
     width: 70px;
+    position: relative;
     text-align: right;
   }
 
