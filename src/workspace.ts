@@ -1,8 +1,6 @@
 import { html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
-import { workspaceStyles } from "./workspaceStyles";
-import { modalStyles } from "./modalStyles";
-import { dropdownStyles } from "./dropdownStyles";
+import { dropdownStyles, modalStyles, workspaceStyles } from "./styles";
 
 class Workspace extends LitElement {
   @property({ type: Boolean }) isModalOpen: boolean = false;
