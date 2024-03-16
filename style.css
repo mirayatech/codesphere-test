@@ -1,0 +1,26 @@
+:root {
+  --color-white: #fff;
+  --color-background: #181621;
+  --color-navy-purple: #0f0e15;
+  --color-border: #282532;
+  --color-light-purple: #cdc8e4;
+  --color-text: #646173;
+  --color-primary: #814bf6;
+  --color-primary-hover: #6d3be5;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-background);
+}
