@@ -5,6 +5,12 @@ import { modalStyles } from "./modalStyles";
 
 class Workspace extends LitElement {
   @property({ type: Boolean }) isModalOpen: boolean;
+  @property({ type: Array }) workspaces = [
+    { name: "Workspace 1" },
+    { name: "Workspace 2" },
+    { name: "Workspace 3" },
+  ];
+  @property({ type: String }) newWorkspaceName: string = "";
 
   static styles = [workspaceStyles, modalStyles];
 
@@ -24,18 +30,14 @@ class Workspace extends LitElement {
             <th>Name</th>
             <th>Actions</th>
           </tr>
-          <tr>
-            <td>Workspace 1</td>
-            <td><button>...</button></td>
-          </tr>
-          <tr>
-            <td>Workspace 2</td>
-            <td><button>...</button></td>
-          </tr>
-          <tr>
-            <td>Workspace 3</td>
-            <td><button>...</button></td>
-          </tr>
+          ${this.workspaces.map(
+            (workspace) => html`
+              <tr>
+                <td>${workspace.name}</td>
+                <td><button>...</button></td>
+              </tr>
+            `
+          )}
         </table>
 
         ${this.isModalOpen
@@ -47,8 +49,20 @@ class Workspace extends LitElement {
                 >
                   <span class="close" @click="${this.closeModal}">&times;</span>
                   <h2 class="modal-title">Create Workspace</h2>
-                  <input type="text" placeholder="Workspace Name" />
-                  <button @click="${this.createWorkspace}" class="modal-button">
+                  <input
+                    type="text"
+                    .value="${this.newWorkspaceName}"
+                    @input="${(event: InputEvent) => {
+                      const target = event.target as HTMLInputElement;
+                      this.newWorkspaceName = target.value;
+                    }}"
+                    placeholder="Workspace Name"
+                  />
+                  <button
+                    @click="${this.createWorkspace}"
+                    class="modal-button"
+                    ?disabled="${this.newWorkspaceName.trim() === ""}"
+                  >
                     Create
                   </button>
                 </div>
@@ -68,6 +82,10 @@ class Workspace extends LitElement {
   }
 
   createWorkspace() {
+    if (this.newWorkspaceName.trim() !== "") {
+      this.workspaces = [...this.workspaces, { name: this.newWorkspaceName }];
+      this.newWorkspaceName = "";
+    }
     this.closeModal();
   }
 }

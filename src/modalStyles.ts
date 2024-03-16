@@ -54,8 +54,14 @@ export const modalStyles = css`
     font-size: calc(14 / 16 * 1rem);
     padding: 6px 12px;
     color: var(--color-white);
-    background-color: var(--color-primary);
     border-radius: 3px;
+    background-color: var(--color-primary);
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  .modal-button:disabled {
+    cursor: not-allowed;
+    background-color: var(--color-border);
   }
 
   input {
