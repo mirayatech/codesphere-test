@@ -9,6 +9,7 @@ See the app live here: [Codesphere Frontend Test](https://codesphere-test.vercel
 ## ⚙️ Technologies
 
 - `CSS`
+- `Vite`
 - `Lit Framework`
 - `TypeScript`
 - `WebSockets`
@@ -45,6 +46,7 @@ If I had more time, I would have done the following:
 - Implement lazy loading for many workspaces so the app doesn't slow down.
 - Display errors in the app where the workspace is located.
 - Add skeleton loading for the workspaces.
+- - When dropdown is open, close it when clicking outside.
 
 ## 🚦 Running the Project
 
@@ -62,5 +64,3 @@ https://github.com/mirayatech/codesphere-test/assets/71933266/ff771b8c-7630-4db9
 ## 📸 Image
 
 ![Screenshot 2024-03-17 at 22 34 19](https://github.com/mirayatech/codesphere-test/assets/71933266/6a467b7a-b4b4-4e86-a0bd-27f05965449a)
-
-
