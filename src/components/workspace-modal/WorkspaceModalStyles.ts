@@ -88,6 +88,10 @@ export const WorkspaceModalStyles = css`
     transition: background-color 0.2s ease-in-out;
   }
 
+  .modal-button:hover {
+    background-color: var(--color-primary-hover);
+  }
+
   .modal-button:disabled {
     cursor: not-allowed;
     background-color: var(--color-border);

@@ -13,7 +13,8 @@ export const WorkspaceTableStyles = css`
     box-sizing: border-box;
   }
 
-  .workspace-table {
+  .workspace-table,
+  .table-body-scroll table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 1em;
@@ -30,12 +31,12 @@ export const WorkspaceTableStyles = css`
     height: 28px;
     padding: 5px 16px 5px 8px;
     gap: 10px;
-
     font-size: calc(12 / 16 * 1rem);
     font-weight: 400;
     color: var(--color-medium-gray);
     background-color: var(--color-navy-purple);
   }
+
   .table-data {
     height: 60px;
     font-size: calc(14 / 16 * 1rem);
@@ -79,6 +80,7 @@ export const WorkspaceTableStyles = css`
   .workspace-button:hover {
     background-color: var(--color-primary-hover);
   }
+
   .dropdown-button {
     font-size: 1em;
     padding: 0.5em;
@@ -108,5 +110,10 @@ export const WorkspaceTableStyles = css`
     gap: 5px;
     color: var(--color-light-gray);
     font-size: calc(14 / 16 * 1rem);
+  }
+
+  .table-body-scroll {
+    overflow-y: auto;
+    height: 400px;
   }
 `;

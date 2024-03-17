@@ -81,54 +81,57 @@ export class WorkspaceTable extends LitElement {
           aria-label="Create a new workspace"
         ></workspace-modal>
         <table class="workspace-table">
-          <tr class="table-row">
-            <th class="table-header">Name</th>
-            <th class="table-header">Actions</th>
-          </tr>
-          <tbody>
-            ${this.workspaces.map(
-              (workspace) => html`
-                <tr class="table-row">
-                  <td class="table-data">${workspace.name}</td>
-                  <td class="table-data">
-                    <button
-                      class="dropdown-button"
-                      @click="${() => this.toggleDropdown(workspace.id)}"
-                      aria-label="Options for ${workspace.name}"
-                      aria-haspopup="true"
-                      aria-expanded="${this.dropdownVisibleFor === workspace.id
-                        ? "true"
-                        : "false"}"
-                    >
-                      <ellipsis-icon aria-hidden="true"></ellipsis-icon>
-                    </button>
-                    ${this.dropdownVisibleFor === workspace.id
-                      ? html`
-                          <div class="dropdown-content" role="menu">
-                            <button
-                              class="dropdown"
-                              @click="${() =>
-                                this.deleteWorkspace(workspace.id)}"
-                              role="menuitem"
-                            >
-                              <trash-icon aria-hidden="true"></trash-icon>
-                              Delete
-                            </button>
-                          </div>
-                        `
-                      : null}
-                  </td>
-                </tr>
-              `
-            )}
-          </tbody>
+          <thead>
+            <tr class="table-row">
+              <th class="table-header">Name</th>
+              <th class="table-header">Actions</th>
+            </tr>
+          </thead>
         </table>
+        <div class="table-body-scroll">
+          <table>
+            <tbody>
+              ${this.workspaces.map(
+                (workspace) => html`
+                  <tr class="table-row">
+                    <td class="table-data">${workspace.name}</td>
+                    <td class="table-data">
+                      <button
+                        class="dropdown-button"
+                        @click="${() => this.toggleDropdown(workspace.id)}"
+                        aria-label="Options for ${workspace.name}"
+                        aria-haspopup="true"
+                        aria-expanded="${this.dropdownVisibleFor ===
+                        workspace.id
+                          ? "true"
+                          : "false"}"
+                      >
+                        <ellipsis-icon aria-hidden="true"></ellipsis-icon>
+                      </button>
+                      ${this.dropdownVisibleFor === workspace.id
+                        ? html`
+                            <div class="dropdown-content" role="menu">
+                              <button
+                                class="dropdown"
+                                @click="${() =>
+                                  this.deleteWorkspace(workspace.id)}"
+                                role="menuitem"
+                              >
+                                <trash-icon aria-hidden="true"></trash-icon>
+                                Delete
+                              </button>
+                            </div>
+                          `
+                        : null}
+                    </td>
+                  </tr>
+                `
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     `;
-  }
-
-  handleCreateWorkspace(event: CustomEvent) {
-    this.createWorkspace(event.detail);
   }
 
   async createWorkspace(workspaceName: string) {
@@ -143,6 +146,10 @@ export class WorkspaceTable extends LitElement {
     await this.apiService.deleteWorkspace(workspaceId);
     this.dropdownVisibleFor = null;
     this.fetchWorkspaces();
+  }
+
+  handleCreateWorkspace(event: CustomEvent) {
+    this.createWorkspace(event.detail);
   }
 
   toggleDropdown(workspaceId: number) {
