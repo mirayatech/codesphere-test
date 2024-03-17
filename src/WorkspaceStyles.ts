@@ -1,6 +1,6 @@
 import { css } from "lit";
 
-export const workspaceStyles = css`
+export const WorkspaceStyles = css`
   :host {
     width: 100%;
     max-width: 520px;
@@ -33,7 +33,7 @@ export const workspaceStyles = css`
 
     font-size: calc(12 / 16 * 1rem);
     font-weight: 400;
-    color: var(--color-text);
+    color: var(--color-medium-gray);
     background-color: var(--color-navy-purple);
   }
   td {
@@ -84,5 +84,32 @@ export const workspaceStyles = css`
 
   .button:hover {
     background-color: var(--color-primary-hover);
+  }
+
+  .dropdown {
+    position: absolute;
+    background-color: var(--color-navy-purple);
+    box-shadow: 0px 5px 10px 0px #0000001a;
+    padding: 6px;
+    z-index: 1;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    width: 226px;
+    height: 50px;
+    top: 60px;
+    right: 0;
+  }
+
+  .dropdown button {
+    gap: 5px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    color: var(--color-light-gray);
+    font-size: calc(14 / 16 * 1rem);
+  }
+
+  .dropdown button span {
+    font-size: 1.6rem;
   }
 `;
