@@ -110,6 +110,12 @@ export const WorkspaceTableStyles = css`
     gap: 5px;
     color: var(--color-light-gray);
     font-size: calc(14 / 16 * 1rem);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .dropdown:hover {
+    border: 1px solid var(--color-primary);
   }
 
   .table-body-scroll {
