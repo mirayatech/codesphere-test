@@ -1,19 +1,67 @@
 import { html, LitElement } from "lit";
-import { property } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 import { dropdownStyles, modalStyles, workspaceStyles } from "./styles";
+import { ApiService, WebSocketDataType, WorkspaceType } from "./util";
 
-class Workspace extends LitElement {
-  @property({ type: Boolean }) isModalOpen: boolean = false;
-  @property({ type: Array }) workspaces = [
-    { id: 1, name: "Workspace 1" },
-    { id: 2, name: "Workspace 2" },
-    { id: 3, name: "Workspace 3" },
-  ];
-  @property({ type: String }) newWorkspaceName: string = "";
+@customElement("my-workspace")
+export class Workspace extends LitElement {
+  @property({ type: Boolean }) isModalOpen = false;
+  @property({ type: Array }) workspaces: WorkspaceType[] = [];
+  @property({ type: String }) newWorkspaceName = "";
   @property({ type: Number }) dropdownVisibleFor: number | null = null;
+  @property({ type: Number }) teamId = 1;
 
   static styles = [workspaceStyles, modalStyles, dropdownStyles];
 
+  private apiService!: ApiService;
+
+  constructor() {
+    super();
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    this.initializeServiceAndData();
+  }
+
+  initializeServiceAndData() {
+    this.apiService = new ApiService(this.teamId);
+    this.fetchWorkspaces();
+    this.setupWebSocket();
+  }
+
+  async fetchWorkspaces() {
+    try {
+      const workspaces = await this.apiService.listWorkspaces();
+      this.workspaces = workspaces;
+    } catch (error) {
+      console.error("Error fetching workspaces:", error);
+    }
+  }
+
+  setupWebSocket() {
+    this.apiService.connectToWebSocket((data: WebSocketDataType) => {
+      if (data.deleted) {
+        this.workspaces = this.workspaces.filter(
+          (workspace) => workspace.id !== data.id
+        );
+      } else {
+        const index = this.workspaces.findIndex(
+          (workspace) => workspace.id === data.id
+        );
+        if (index >= 0) {
+          this.workspaces[index] = { ...this.workspaces[index], ...data };
+        } else {
+          const newWorkspace: WorkspaceType = {
+            id: data.id,
+            name: data.name || "Unnamed Workspace",
+          };
+          this.workspaces.push(newWorkspace);
+        }
+      }
+      this.requestUpdate();
+    });
+  }
   render() {
     return html`
       <div>
@@ -43,7 +91,7 @@ class Workspace extends LitElement {
                           </button>
                         </div>
                       `
-                    : ""}
+                    : null}
                 </td>
               </tr>
             `
@@ -80,49 +128,38 @@ class Workspace extends LitElement {
             </div>
           </div>
         `
-      : "";
+      : null;
   }
 
   updateNewWorkspaceName(event: InputEvent) {
-    const target = event.target as HTMLInputElement;
-    this.newWorkspaceName = target.value;
+    this.newWorkspaceName = (event.target as HTMLInputElement).value;
   }
 
   toggleModal() {
     this.isModalOpen = !this.isModalOpen;
+    this.newWorkspaceName = "";
   }
 
   closeModal() {
     this.isModalOpen = false;
+    this.newWorkspaceName = "";
   }
 
-  createWorkspace() {
-    if (this.newWorkspaceName.trim() !== "") {
-      const newId =
-        this.workspaces.reduce(
-          (maxId, workspace) => Math.max(maxId, workspace.id),
-          0
-        ) + 1;
-      this.workspaces = [
-        ...this.workspaces,
-        { id: newId, name: this.newWorkspaceName },
-      ];
-      this.newWorkspaceName = "";
-      this.closeModal();
-    }
+  async createWorkspace() {
+    await this.apiService.createWorkspace(this.newWorkspaceName);
+    this.newWorkspaceName = "";
+    this.closeModal();
+    this.fetchWorkspaces();
+  }
+
+  async deleteWorkspace(workspaceId: number) {
+    await this.apiService.deleteWorkspace(workspaceId);
+    this.dropdownVisibleFor = null;
+    this.fetchWorkspaces();
   }
 
   toggleDropdown(workspaceId: number) {
     this.dropdownVisibleFor =
       this.dropdownVisibleFor === workspaceId ? null : workspaceId;
   }
-
-  deleteWorkspace(workspaceId: number) {
-    this.workspaces = this.workspaces.filter(
-      (workspace) => workspace.id !== workspaceId
-    );
-    this.dropdownVisibleFor = null;
-  }
 }
-
-customElements.define("my-workspace", Workspace);
