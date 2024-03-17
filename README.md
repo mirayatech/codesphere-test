@@ -39,6 +39,7 @@ Finally, I added e2e testing with Playwright to ensure the app is reliable and o
 
 If I had more time, I would have done the following:
 
+- - Creating a mock API and WebSocket server for the e2e tests to avoid reliance on the real server, which isn't reliable. If the server is down, the tests will fail.
 - Add a feature that allows users to edit the workspace name.
 - Ensure the modal is fully accessible.
 - Add a feature that allows users to add a description to the workspace.
