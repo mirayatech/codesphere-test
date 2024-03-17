@@ -80,7 +80,7 @@ export class WorkspaceModal extends LitElement {
     super.updated(changedProperties);
     if (changedProperties.has("isOpen") && this.isOpen) {
       const inputElement = this.shadowRoot?.querySelector(
-        "#workspaceNameInput"
+        "#workspace-name-input"
       ) as HTMLInputElement;
       if (inputElement) inputElement.focus();
     }
