@@ -99,7 +99,7 @@ export class WorkspaceTable extends LitElement {
                       <button
                         class="dropdown-button"
                         @click="${() => this.toggleDropdown(workspace.id)}"
-                        aria-label="Options for ${workspace.name}"
+                        aria-label="Options"
                         aria-haspopup="true"
                         aria-expanded="${this.dropdownVisibleFor ===
                         workspace.id
@@ -116,6 +116,7 @@ export class WorkspaceTable extends LitElement {
                                 @click="${() =>
                                   this.deleteWorkspace(workspace.id)}"
                                 role="menuitem"
+                                aria-label="Delete"
                               >
                                 <trash-icon aria-hidden="true"></trash-icon>
                                 Delete

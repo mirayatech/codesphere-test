@@ -31,10 +31,13 @@ export class WorkspaceModal extends LitElement {
               <h2 id="modalTitle" class="modal-title">Create Workspace</h2>
 
               <div class="modal-actions">
+                <label for="workspace-name-input" class="sr-only"
+                  >Workspace Name</label
+                >
                 <input
-                  id="workspaceNameInput"
+                  id="workspace-name-input"
                   type="text"
-                  .value="${this.newWorkspaceName}"
+                  value="${this.newWorkspaceName}"
                   @input="${this.updateNewWorkspaceName}"
                   placeholder="Workspace Name"
                   class="modal-input"
