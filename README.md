@@ -60,7 +60,7 @@ To run the project in your local environment, follow these steps:
 
 ## 🎥 Video
 
-https://github.com/mirayatech/codesphere-test/assets/71933266/90585715-ac23-48c8-a071-536e68f466fa
+https://github.com/mirayatech/codesphere-test/assets/71933266/2b818dbf-42dc-4730-a34c-6705ef1ea3fe
 
 ## 📸 Image
 
