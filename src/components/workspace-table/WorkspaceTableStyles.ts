@@ -74,6 +74,7 @@ export const WorkspaceTableStyles = css`
     line-height: 22px;
     border: none;
     color: var(--color-white);
+    cursor: pointer;
     transition: background-color 0.2s ease-in-out;
   }
 
