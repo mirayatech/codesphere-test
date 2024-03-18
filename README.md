@@ -27,7 +27,7 @@ Users can add new workspaces, manage workspaces, and enjoy live interaction.
 
 I began by building the UI, starting with the table and manually adding some table data elements. Following this, I added styling to enhance the appearance.
 
-Next, I developed the modal and, after completing both the modal and workspace-table components, implemented functionality that allows users to create new workspaces.
+Next, I developed the modal and implemented functionality that allows users to create new workspaces after completing both the modal and workspace-table components.
 
 Afterward, I made sure the user had the ability to delete workspaces.
 
@@ -39,7 +39,7 @@ Finally, I added e2e testing with Playwright to ensure the app is reliable and o
 
 If I had more time, I would have done the following:
 
-- - Creating a mock API and WebSocket server for the e2e tests to avoid reliance on the real server, which isn't reliable. If the server is down, the tests will fail.
+- Creating a mock API and WebSocket server for the e2e tests to avoid reliance on the real server, which isn't reliable. If the server is down, the tests will fail.
 - Add a feature that allows users to edit the workspace name.
 - Ensure the modal is fully accessible.
 - Add a feature that allows users to add a description to the workspace.
@@ -47,7 +47,7 @@ If I had more time, I would have done the following:
 - Implement lazy loading for many workspaces so the app doesn't slow down.
 - Display errors in the app where the workspace is located.
 - Add skeleton loading for the workspaces.
-- - When dropdown is open, close it when clicking outside.
+- When the dropdown is open, close it when clicking outside.
 
 ## 🚦 Running the Project
 
